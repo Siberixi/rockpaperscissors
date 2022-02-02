@@ -18,34 +18,51 @@ function playRound(playerSelection, computerSelection){
 }
 
 function playGame(){
-    let playerScore = 0;
-    let computerScore = 0;
-    let round = 0;
-    while(round < 5){
-        let playerSelection = prompt("Rock, Paper, or Scissors? ").toLowerCase();
-        let computerSelection = computerPlay();
-        if(playRound(playerSelection, computerSelection).charAt(0) == "W"){
-            console.log(playRound(playerSelection, computerSelection));
-            playerScore++;
-        }
-        else if(playRound(playerSelection, computerSelection).charAt(0) == "L"){
-            console.log(playRound(playerSelection, computerSelection));
-            computerScore++;
-        }
-        else{
-            console.log(playRound(playerSelection, computerSelection));
-        }
-        round++;
+    let computerSelection = computerPlay();
+    if(playRound(playerSelection, computerSelection).charAt(0) == "W"){
+        playerScore++;
+        results.textContent = (playRound(playerSelection, computerSelection));
+        score.textContent = `Player: ${playerScore} / Computer: ${computerScore}`;
+        playerSelection = "";
     }
-    if(playerScore > computerScore){
-        console.log(`You beat the computer ${playerScore} to ${computerScore}`);
-    }
-    else if(computerScore > playerScore){
-        console.log(`The computer beat you ${computerScore} to ${playerScore}`)
+    else if(playRound(playerSelection, computerSelection).charAt(0) == "L"){
+        computerScore++;
+        results.textContent = (playRound(playerSelection, computerSelection));
+        score.textContent = `Player: ${playerScore} / Computer: ${computerScore}`;
+        playerSelection = "";
     }
     else{
-        console.log("You tied the computer");
+        results.textContent = `${playRound(playerSelection, computerSelection)}`;
+        score.textContent = `Player: ${playerScore} / Computer: ${computerScore}`;
+        playerSelection = "";
+    }
+    if(playerScore > computerScore && playerScore === 5){
+        score.textContent = `You beat the computer ${playerScore} to ${computerScore}`;
+    }
+    else if(computerScore > playerScore && computerScore === 5){
+        score.textContent = `The computer beat you ${computerScore} to ${playerScore}`;
     }
 }
 
-playGame();
+let playerSelection = "";
+let playerScore = 0;
+let computerScore = 0;
+const results = document.querySelector("#results");
+const score = document.querySelector("#score");
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+rock.addEventListener('click', () => {
+    playerSelection = "rock";
+    playGame();
+});
+
+paper.addEventListener('click', () => {
+    playerSelection = "paper";
+    playGame();
+});
+
+scissors.addEventListener('click', () => {
+    playerSelection = "scissors";
+    playGame();
+});
